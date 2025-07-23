@@ -3,9 +3,7 @@
 const ingresos = [];
 const gastos = [];
 
-/**
- * Pide al usuario un ingreso y lo almacena en el array `ingresos`.
- */
+
 function agregarIngreso() {
     const descripcion = prompt('👉 Descripción del ingreso:');
     let monto = prompt('💰 Monto del ingreso (número mayor que 0):');
@@ -20,9 +18,6 @@ function agregarIngreso() {
     console.log(`Ingreso agregado: ${descripcion} — $${monto.toFixed(2)}`);
 }
 
-/**
- * Pide al usuario un gasto y lo almacena en el array `gastos`.
- */
 function agregarGasto() {
     const descripcion = prompt('👉 Descripción del gasto:');
     let monto = prompt('💸 Monto del gasto (número mayor que 0):');
@@ -37,9 +32,6 @@ function agregarGasto() {
     console.log(`Gasto agregado: ${descripcion} — $${monto.toFixed(2)}`);
 }
 
-/**
- * Calcula totales y muestra un alert con el saldo final.
- */
 function calcularSaldo() {
     const totalIngresos = ingresos.reduce((sum, item) => sum + item.monto, 0);
     const totalGastos = gastos.reduce((sum, item) => sum + item.monto, 0);
@@ -57,9 +49,6 @@ function calcularSaldo() {
     console.log('Simulación finalizada.');
 }
 
-/**
- * Bucle principal que muestra el menú y controla el flujo.
- */
 function iniciarSimulador() {
     console.log('--- Iniciando simulador de presupuesto mensual ---');
     let continuar = true;
@@ -94,5 +83,4 @@ function iniciarSimulador() {
     }
 }
 
-// Arranca el simulador tan pronto se carga el script
 iniciarSimulador();
