@@ -1,5 +1,27 @@
 'use strict';
 
+// Manejo global de errores para evitar errores de extensiones
+window.addEventListener('error', (event) => {
+    // Filtrar errores de extensiones del navegador
+    if (event.error && event.error.message && 
+        (event.error.message.includes('message channel closed') || 
+         event.error.message.includes('runtime.lastError'))) {
+        event.preventDefault();
+        return false;
+    }
+});
+
+// Manejo de promesas rechazadas no capturadas
+window.addEventListener('unhandledrejection', (event) => {
+    // Filtrar errores de extensiones
+    if (event.reason && event.reason.message && 
+        (event.reason.message.includes('message channel closed') || 
+         event.reason.message.includes('runtime.lastError'))) {
+        event.preventDefault();
+        return false;
+    }
+});
+
 // Clase principal del Gestor de Presupuesto
 class GestorPresupuesto {
     constructor() {
@@ -29,7 +51,6 @@ class GestorPresupuesto {
             // Inicializar la aplicación
             this.inicializar();
         } catch (error) {
-            console.error('Error al inicializar la aplicación:', error);
             this.mostrarErrorInicializacion();
         }
     }
@@ -43,7 +64,7 @@ class GestorPresupuesto {
             this.inicializarGrafico();
             this.mostrarMensajeBienvenida();
         } catch (error) {
-            console.error('Error en la inicialización:', error);
+            // Error silencioso en inicialización
         }
     }
 
@@ -124,7 +145,7 @@ class GestorPresupuesto {
             // Eventos para inputs con validación en tiempo real
             this.configurarValidacionInputs();
         } catch (error) {
-            console.error('Error al configurar eventos:', error);
+            // Error silencioso al configurar eventos
         }
     }
 
@@ -145,7 +166,7 @@ class GestorPresupuesto {
                 });
             });
         } catch (error) {
-            console.error('Error al configurar validación de inputs:', error);
+            // Error silencioso al configurar validación
         }
     }
 
@@ -340,15 +361,12 @@ class GestorPresupuesto {
     // Verificar que Chart.js esté disponible
     verificarChartJS() {
         if (typeof Chart === 'undefined') {
-            console.error('Chart.js no está disponible. Verificando en 1 segundo...');
             this.actualizarEstadoGrafico('Chart.js no disponible', 'error');
             setTimeout(() => {
                 if (typeof Chart === 'undefined') {
-                    console.error('Chart.js aún no está disponible después de 1 segundo');
                     this.actualizarEstadoGrafico('Chart.js no disponible - Recarga la página', 'error');
                     this.mostrarNotificacion('Error: Chart.js no se pudo cargar. Recarga la página.', 'error');
                 } else {
-                    console.log('Chart.js ahora está disponible');
                     this.actualizarEstadoGrafico('Chart.js disponible', 'success');
                     this.inicializarGrafico();
                 }
@@ -371,7 +389,6 @@ class GestorPresupuesto {
 
             const ctx = document.getElementById('budget-chart');
             if (!ctx) {
-                console.error('No se encontró el elemento canvas para el gráfico');
                 this.actualizarEstadoGrafico('Error: Canvas no encontrado', 'error');
                 return;
             }
@@ -381,7 +398,7 @@ class GestorPresupuesto {
                 try {
                     this.chart.destroy();
                 } catch (destroyError) {
-                    console.warn('Error al destruir gráfico existente:', destroyError);
+                    // Error silencioso al destruir gráfico
                 }
                 this.chart = null;
             }
@@ -427,14 +444,12 @@ class GestorPresupuesto {
                 }
             });
 
-            console.log('Gráfico inicializado correctamente');
             this.actualizarEstadoGrafico('Gráfico listo', 'success');
             
             // Actualizar el gráfico con los datos actuales
             this.actualizarGrafico();
             
         } catch (error) {
-            console.error('Error al inicializar el gráfico:', error);
             this.actualizarEstadoGrafico('Error al inicializar', 'error');
             this.chart = null;
         }
@@ -444,12 +459,10 @@ class GestorPresupuesto {
     actualizarGrafico() {
         try {
             if (!this.chart) {
-                console.warn('Gráfico no inicializado, intentando inicializar...');
                 this.actualizarEstadoGrafico('Reinicializando gráfico...', 'loading');
                 this.inicializarGrafico();
                 // Si aún no se pudo inicializar, salir
                 if (!this.chart) {
-                    console.error('No se pudo inicializar el gráfico');
                     this.actualizarEstadoGrafico('No se pudo inicializar', 'error');
                     return;
                 }
@@ -460,7 +473,6 @@ class GestorPresupuesto {
 
             // Verificar que los datos sean válidos
             if (isNaN(totalIngresos) || isNaN(totalGastos)) {
-                console.error('Datos inválidos para el gráfico:', { totalIngresos, totalGastos });
                 this.actualizarEstadoGrafico('Datos inválidos', 'error');
                 return;
             }
@@ -471,22 +483,15 @@ class GestorPresupuesto {
             // Forzar la actualización del gráfico
             this.chart.update('active');
             
-            console.log('Gráfico actualizado:', {
-                ingresos: totalIngresos,
-                gastos: totalGastos,
-                total: totalIngresos + totalGastos
-            });
-            
             this.actualizarEstadoGrafico(`Actualizado: $${totalIngresos.toFixed(2)} ingresos, $${totalGastos.toFixed(2)} gastos`, 'success');
             
         } catch (error) {
-            console.error('Error al actualizar el gráfico:', error);
             this.actualizarEstadoGrafico('Error al actualizar', 'error');
             // Intentar reinicializar el gráfico si hay un error
             try {
                 this.inicializarGrafico();
             } catch (reinitError) {
-                console.error('Error al reinicializar el gráfico:', reinitError);
+                // Error silencioso al reinicializar
             }
         }
     }
@@ -593,7 +598,6 @@ class GestorPresupuesto {
         try {
             localStorage.setItem('gestorPresupuesto', JSON.stringify(datos));
         } catch (error) {
-            console.error('Error al guardar en localStorage:', error);
             this.mostrarNotificacion('Error al guardar los datos', 'error');
         }
     }
@@ -616,7 +620,6 @@ class GestorPresupuesto {
                 );
             }
         } catch (error) {
-            console.error('Error al cargar datos del localStorage:', error);
             this.ingresos = [];
             this.gastos = [];
         }
@@ -691,18 +694,10 @@ class GestorPresupuesto {
                     
                     this.mostrarNotificacion('Datos importados correctamente', 'success');
                     
-                    // Log para debugging
-                    console.log('Datos importados:', {
-                        ingresos: this.ingresos.length,
-                        gastos: this.gastos.length,
-                        totalIngresos: this.calcularTotal(this.ingresos),
-                        totalGastos: this.calcularTotal(this.gastos)
-                    });
                 } else {
                     throw new Error('Formato de archivo inválido');
                 }
             } catch (error) {
-                console.error('Error al importar:', error);
                 this.mostrarNotificacion('Error al importar el archivo. Verifica el formato.', 'error');
             }
         };
@@ -740,30 +735,76 @@ document.addEventListener('DOMContentLoaded', () => {
         // Agregar funcionalidad de exportar/importar después de un pequeño delay
         setTimeout(() => {
             try {
-                this.agregarBotonesExportarImportar();
+                agregarBotonesExportarImportar();
             } catch (error) {
-                console.error('Error al agregar botones de exportar/importar:', error);
+                // Error silencioso al agregar botones
             }
         }, 100);
         
     } catch (error) {
-        console.error('Error al inicializar la aplicación:', error);
-        this.mostrarErrorInicializacion();
+        mostrarErrorInicializacion();
     }
 });
+
+// Función para mostrar error de inicialización
+function mostrarErrorInicializacion() {
+    try {
+        const errorDiv = document.createElement('div');
+        errorDiv.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #ef4444;
+            color: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            z-index: 10000;
+            max-width: 400px;
+        `;
+        errorDiv.innerHTML = `
+            <h3>Error de Inicialización</h3>
+            <p>Hubo un problema al cargar la aplicación. Por favor, recarga la página.</p>
+            <button onclick="location.reload()" style="
+                background: white;
+                color: #ef4444;
+                border: none;
+                padding: 0.5rem 1rem;
+                border-radius: 0.25rem;
+                cursor: pointer;
+                margin-top: 1rem;
+            ">Recargar Página</button>
+        `;
+        document.body.appendChild(errorDiv);
+            } catch (displayError) {
+            // Fallback simple
+            alert('Error al cargar la aplicación. Por favor, recarga la página.');
+        }
+}
 
 // Función para agregar botones de exportar/importar
 function agregarBotonesExportarImportar() {
     try {
+        // Verificar que el DOM esté listo
+        if (!document.querySelector('.transactions-header')) {
+            setTimeout(agregarBotonesExportarImportar, 500);
+            return;
+        }
+
         // Agregar funcionalidad de exportar/importar
         const exportBtn = document.createElement('button');
         exportBtn.className = 'btn btn-secondary';
         exportBtn.innerHTML = '<i class="fas fa-download"></i> Exportar';
         exportBtn.onclick = (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            if (window.gestorPresupuesto) {
-                window.gestorPresupuesto.exportarDatos();
+            try {
+                e.preventDefault();
+                e.stopPropagation();
+                if (window.gestorPresupuesto) {
+                    window.gestorPresupuesto.exportarDatos();
+                }
+            } catch (error) {
+                alert('Error al exportar datos. Intenta de nuevo.');
             }
         };
         
@@ -772,9 +813,14 @@ function agregarBotonesExportarImportar() {
         importInput.accept = '.json';
         importInput.style.display = 'none';
         importInput.onchange = (e) => {
-            e.preventDefault();
-            if (window.gestorPresupuesto) {
-                window.gestorPresupuesto.importarDatos(e);
+            try {
+                e.preventDefault();
+                e.stopPropagation();
+                if (window.gestorPresupuesto) {
+                    window.gestorPresupuesto.importarDatos(e);
+                }
+            } catch (error) {
+                alert('Error al importar datos. Verifica el archivo e intenta de nuevo.');
             }
         };
         
@@ -782,15 +828,25 @@ function agregarBotonesExportarImportar() {
         importBtn.className = 'btn btn-secondary';
         importBtn.innerHTML = '<i class="fas fa-upload"></i> Importar';
         importBtn.onclick = (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            importInput.click();
+            try {
+                e.preventDefault();
+                e.stopPropagation();
+                importInput.click();
+            } catch (error) {
+                alert('Error al abrir selector de archivo. Intenta de nuevo.');
+            }
         };
         
         // Agregar botones al header de transacciones
         const transactionsHeader = document.querySelector('.transactions-header');
         if (transactionsHeader) {
+            // Verificar si ya existen los botones
+            if (transactionsHeader.querySelector('.export-import-buttons')) {
+                return; // Ya existen los botones
+            }
+
             const buttonGroup = document.createElement('div');
+            buttonGroup.className = 'export-import-buttons';
             buttonGroup.style.display = 'flex';
             buttonGroup.style.gap = '0.5rem';
             buttonGroup.appendChild(exportBtn);
@@ -800,7 +856,14 @@ function agregarBotonesExportarImportar() {
             transactionsHeader.appendChild(buttonGroup);
         }
     } catch (error) {
-        console.error('Error al configurar botones de exportar/importar:', error);
+        // Reintentar después de un delay
+        setTimeout(() => {
+            try {
+                agregarBotonesExportarImportar();
+            } catch (retryError) {
+                // Error silencioso en reintento
+            }
+        }, 1000);
     }
 }
 
@@ -832,18 +895,43 @@ const estilosAdicionales = `
         flex-wrap: wrap;
     }
     
+    .export-import-buttons {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+    
     @media (max-width: 768px) {
-        .btn-group {
+        .btn-group,
+        .export-import-buttons {
             flex-direction: column;
         }
     }
 `;
 
 // Insertar estilos adicionales de manera segura
-try {
-    const styleSheet = document.createElement('style');
-    styleSheet.textContent = estilosAdicionales;
-    document.head.appendChild(styleSheet);
-} catch (error) {
-    console.error('Error al insertar estilos adicionales:', error);
+function insertarEstilosAdicionales() {
+    try {
+        // Verificar si ya se insertaron los estilos
+        if (document.getElementById('estilos-adicionales')) {
+            return;
+        }
+
+        const styleSheet = document.createElement('style');
+        styleSheet.id = 'estilos-adicionales';
+        styleSheet.textContent = estilosAdicionales;
+        document.head.appendChild(styleSheet);
+    } catch (error) {
+        // Reintentar después de un delay
+        setTimeout(insertarEstilosAdicionales, 1000);
+    }
 }
+
+// Llamar a la función cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', () => {
+    try {
+        insertarEstilosAdicionales();
+    } catch (error) {
+        // Error silencioso al insertar estilos
+    }
+});
