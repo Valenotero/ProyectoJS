@@ -5,31 +5,154 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Simulador de Presupuesto Mensual</title>
+    <title>Gestor de Presupuesto Personal</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Roboto:wght@300;500&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@300;400;500;700&display=swap"
         rel="stylesheet" />
 
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
     <!-- Enlazamos el CSS -->
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="css/style.css" />
 </head>
 
 <body>
-    <main class="container">
-        <h1>Simulador de Presupuesto Mensual</h1>
-        <p>
-            Este simulador te permitirá ingresar tus ingresos y gastos del mes,
-            y calculará tu saldo final. Usa la consola (F12) para ver los logs
-            de cada operación y los diálogos (prompt/alert) para la interacción.
-        </p>
+    <header class="header">
+        <div class="container">
+            <h1><i class="fas fa-wallet"></i> Gestor de Presupuesto</h1>
+            <p class="subtitle">Controla tus finanzas de manera inteligente</p>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <!-- Resumen del presupuesto -->
+            <section class="budget-summary">
+                <div class="summary-card income">
+                    <div class="card-icon">
+                        <i class="fas fa-arrow-up"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Ingresos</h3>
+                        <p class="amount" id="total-income">$0.00</p>
+                    </div>
+                </div>
+                
+                <div class="summary-card expense">
+                    <div class="card-icon">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Gastos</h3>
+                        <p class="amount" id="total-expense">$0.00</p>
+                    </div>
+                </div>
+                
+                <div class="summary-card balance">
+                    <div class="card-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Saldo</h3>
+                        <p class="amount" id="total-balance">$0.00</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Formularios para agregar transacciones -->
+            <section class="transaction-forms">
+                <div class="form-container">
+                    <div class="form-card">
+                        <h3><i class="fas fa-plus-circle"></i> Agregar Ingreso</h3>
+                        <form id="income-form">
+                            <div class="form-group">
+                                <label for="income-description">Descripción:</label>
+                                <input type="text" id="income-description" placeholder="Ej: Salario, Freelance..." required>
+                            </div>
+                            <div class="form-group">
+                                <label for="income-amount">Monto:</label>
+                                <input type="number" id="income-amount" placeholder="0.00" step="0.01" min="0.01" required>
+                            </div>
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-plus"></i> Agregar Ingreso
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="form-card">
+                        <h3><i class="fas fa-minus-circle"></i> Agregar Gasto</h3>
+                        <form id="expense-form">
+                            <div class="form-group">
+                                <label for="expense-description">Descripción:</label>
+                                <input type="text" id="expense-description" placeholder="Ej: Comida, Transporte..." required>
+                            </div>
+                            <div class="form-group">
+                                <label for="expense-amount">Monto:</label>
+                                <input type="number" id="expense-amount" placeholder="0.00" step="0.01" min="0.01" required>
+                            </div>
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fas fa-plus"></i> Agregar Gasto
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Lista de transacciones -->
+            <section class="transactions">
+                <div class="transactions-header">
+                    <h3><i class="fas fa-list"></i> Historial de Transacciones</h3>
+                    <button class="btn btn-secondary" id="clear-all-btn">
+                        <i class="fas fa-trash"></i> Limpiar Todo
+                    </button>
+                </div>
+                
+                <div class="transactions-container">
+                    <div class="transactions-section">
+                        <h4><i class="fas fa-arrow-up text-success"></i> Ingresos</h4>
+                        <div id="income-list" class="transaction-list"></div>
+                    </div>
+                    
+                    <div class="transactions-section">
+                        <h4><i class="fas fa-arrow-down text-danger"></i> Gastos</h4>
+                        <div id="expense-list" class="transaction-list"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Gráfico de presupuesto -->
+            <section class="budget-chart">
+                <div class="chart-header">
+                    <h3><i class="fas fa-chart-pie"></i> Distribución del Presupuesto</h3>
+                    <button class="btn btn-secondary" id="test-chart-btn" title="Probar gráfico">
+                        <i class="fas fa-sync-alt"></i> Probar Gráfico
+                    </button>
+                </div>
+                <div class="chart-container">
+                    <canvas id="budget-chart"></canvas>
+                    <div id="chart-status" class="chart-status">
+                        <p>Estado del gráfico: <span id="chart-status-text">Inicializando...</span></p>
+                    </div>
+                </div>
+            </section>
+        </div>
     </main>
 
-    <footer>
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Gestor de Presupuesto Personal. Todos los derechos reservados a Valentín Otero.</p>
+        </div>
     </footer>
-    <script src="script.js"></script>
+
+    <!-- Chart.js para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Enlazamos el JavaScript -->
+    <script src="js/script.js"></script>
 </body>
 
 </html>
