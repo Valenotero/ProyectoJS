@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Análisis - Gestor de Presupuesto Personal</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💰</text></svg>">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@300;400;500;700&display=swap"
+        rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/style.css" />
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <h1><i class="fas fa-wallet"></i> Gestor de Presupuesto</h1>
+            <p class="subtitle">Análisis - Insights profundos de tus finanzas</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav-tabs">
+        <div class="container">
+            <a href="../index.html" class="nav-tab">
+                <i class="fas fa-home"></i> Inicio
+            </a>
+            <a href="dashboard.html" class="nav-tab">
+                <i class="fas fa-chart-pie"></i> Dashboard
+            </a>
+            <a href="transacciones.html" class="nav-tab">
+                <i class="fas fa-exchange-alt"></i> Transacciones
+            </a>
+            <a href="calendario.html" class="nav-tab">
+                <i class="fas fa-calendar-alt"></i> Calendario
+            </a>
+            <a href="analisis.html" class="nav-tab">
+                <i class="fas fa-chart-line"></i> Análisis
+            </a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <!-- Period Selector -->
+            <div class="period-selector">
+                <div class="period-controls">
+                    <label for="period-type">Período de Análisis:</label>
+                    <select id="period-type">
+                        <option value="month">Mes Actual</option>
+                        <option value="quarter">Último Trimestre</option>
+                        <option value="year">Año Actual</option>
+                        <option value="custom">Personalizado</option>
+                        <option value="all">Todos los Períodos</option>
+                    </select>
+
+                    <div id="custom-period" style="display: none; gap: 0.5rem;">
+                        <input type="date" id="start-date">
+                        <input type="date" id="end-date">
+                        <button class="btn btn-secondary" id="apply-period">Aplicar</button>
+                    </div>
+
+                    <span id="current-period-text" style="color: var(--text-light); font-weight: 500;"></span>
+                </div>
+            </div>
+
+            <!-- Estadísticas Generales -->
+            <section class="general-stats">
+                <h3><i class="fas fa-chart-bar"></i> Estadísticas Generales</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="avg-income">$0</div>
+                        <div class="stat-label">Ingreso Promedio</div>
+                        <div class="stat-trend" id="income-trend"></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="avg-expense">$0</div>
+                        <div class="stat-label">Gasto Promedio</div>
+                        <div class="stat-trend" id="expense-trend"></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="savings-rate">0%</div>
+                        <div class="stat-label">Tasa de Ahorro</div>
+                        <div class="stat-trend" id="savings-trend"></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="transaction-count">0</div>
+                        <div class="stat-label">Total Transacciones</div>
+                        <div class="stat-trend" id="transactions-trend"></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="days-tracked">0</div>
+                        <div class="stat-label">Días Registrados</div>
+                        <div class="stat-trend" id="days-trend"></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="largest-expense">$0</div>
+                        <div class="stat-label">Mayor Gasto</div>
+                        <div class="stat-trend" id="largest-expense-category"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Gráficos Principales -->
+            <section class="main-charts">
+                <div class="charts-section">
+                    <div class="chart-card">
+                        <h3><i class="fas fa-chart-line"></i> Tendencia Temporal</h3>
+                        <div class="chart-controls">
+                            <select id="trend-period">
+                                <option value="daily">Por Días</option>
+                                <option value="weekly">Por Semanas</option>
+                                <option value="monthly" selected>Por Meses</option>
+                            </select>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="trend-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <h3><i class="fas fa-chart-bar"></i> Gastos por Categoría</h3>
+                        <div class="chart-controls">
+                            <select id="category-view">
+                                <option value="amount">Por Monto</option>
+                                <option value="count">Por Cantidad</option>
+                                <option value="percentage">Por Porcentaje</option>
+                            </select>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="category-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="charts-section">
+                    <div class="chart-card">
+                        <h3><i class="fas fa-calendar-week"></i> Actividad por Día de la Semana</h3>
+                        <div class="chart-container">
+                            <canvas id="weekly-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <h3><i class="fas fa-clock"></i> Distribución por Hora</h3>
+                        <div class="chart-container">
+                            <canvas id="hourly-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Análisis de Categorías -->
+            <section class="category-analysis">
+                <div class="analysis-header">
+                    <h3><i class="fas fa-tags"></i> Análisis por Categorías</h3>
+                    <div class="analysis-controls">
+                        <select id="category-analysis-period">
+                            <option value="month">Mes Actual</option>
+                            <option value="quarter">Último Trimestre</option>
+                            <option value="year">Año Actual</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="category-cards-grid" id="category-cards">
+                    <!-- Se generarán dinámicamente -->
+                </div>
+            </section>
+
+            <!-- Análisis de Patrones -->
+            <section class="patterns-analysis">
+                <h3><i class="fas fa-search"></i> Análisis de Patrones</h3>
+                <div class="patterns-grid">
+                    <div class="pattern-card">
+                        <h4><i class="fas fa-calendar-day"></i> Día más Gastador</h4>
+                        <div class="pattern-content">
+                            <div class="pattern-value" id="highest-spending-day">-</div>
+                            <div class="pattern-description">Día de la semana con más gastos</div>
+                        </div>
+                    </div>
+
+                    <div class="pattern-card">
+                        <h4><i class="fas fa-trending-up"></i> Tendencia General</h4>
+                        <div class="pattern-content">
+                            <div class="pattern-value" id="general-trend">-</div>
+                            <div class="pattern-description">Dirección de tus gastos</div>
+                        </div>
+                    </div>
+
+                    <div class="pattern-card">
+                        <h4><i class="fas fa-exclamation-triangle"></i> Gastos Atípicos</h4>
+                        <div class="pattern-content">
+                            <div class="pattern-value" id="unusual-expenses">0</div>
+                            <div class="pattern-description">Transacciones fuera de lo normal</div>
+                        </div>
+                    </div>
+
+                    <div class="pattern-card">
+                        <h4><i class="fas fa-repeat"></i> Frecuencia Promedio</h4>
+                        <div class="pattern-content">
+                            <div class="pattern-value" id="avg-frequency">-</div>
+                            <div class="pattern-description">Transacciones por día</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Insights y Recomendaciones -->
+            <section class="insights-section">
+                <h3><i class="fas fa-lightbulb"></i> Insights y Recomendaciones</h3>
+                <div class="insights-container" id="insights-container">
+                    <!-- Se generarán dinámicamente -->
+                </div>
+            </section>
+
+            <!-- Comparativas -->
+            <section class="comparisons-section">
+                <h3><i class="fas fa-balance-scale"></i> Comparativas Temporales</h3>
+                <div class="comparison-cards">
+                    <div class="comparison-card">
+                        <h4>Mes Actual vs Mes Anterior</h4>
+                        <div class="comparison-content">
+                            <div class="comparison-item">
+                                <span>Ingresos:</span>
+                                <span class="comparison-value" id="income-comparison">-</span>
+                            </div>
+                            <div class="comparison-item">
+                                <span>Gastos:</span>
+                                <span class="comparison-value" id="expense-comparison">-</span>
+                            </div>
+                            <div class="comparison-item">
+                                <span>Ahorro:</span>
+                                <span class="comparison-value" id="savings-comparison">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4>Año Actual vs Año Anterior</h4>
+                        <div class="comparison-content">
+                            <div class="comparison-item">
+                                <span>Ingresos:</span>
+                                <span class="comparison-value" id="yearly-income-comparison">-</span>
+                            </div>
+                            <div class="comparison-item">
+                                <span>Gastos:</span>
+                                <span class="comparison-value" id="yearly-expense-comparison">-</span>
+                            </div>
+                            <div class="comparison-item">
+                                <span>Ahorro:</span>
+                                <span class="comparison-value" id="yearly-savings-comparison">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Exportar Reportes -->
+            <section class="export-section">
+                <h3><i class="fas fa-file-export"></i> Exportar Reportes</h3>
+                <div class="export-options">
+                    <button class="btn btn-primary" id="export-detailed-report">
+                        <i class="fas fa-file-pdf"></i> Reporte Detallado
+                    </button>
+                    <button class="btn btn-secondary" id="export-summary">
+                        <i class="fas fa-file-alt"></i> Resumen Ejecutivo
+                    </button>
+                    <button class="btn btn-secondary" id="export-charts">
+                        <i class="fas fa-chart-bar"></i> Solo Gráficos
+                    </button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Gestor de Presupuesto Personal. Todos los derechos reservados a Valentín Otero.</p>
+        </div>
+    </footer>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- JavaScript -->
+    <script src="../js/script.js"></script>
+    <script>
+        // Inicializar solo funciones de análisis
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.gestorPresupuesto) {
+                gestorPresupuesto.inicializarAnalisis();
+            }
+        });
+    </script>
+</body>
+
+</html>

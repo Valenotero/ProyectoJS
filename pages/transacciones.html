@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transacciones - Gestor de Presupuesto Personal</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💰</text></svg>">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/style.css" />
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <h1><i class="fas fa-wallet"></i> Gestor de Presupuesto</h1>
+            <p class="subtitle">Transacciones - Administra tus ingresos y gastos</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav-tabs">
+        <div class="container">
+            <a href="../index.html" class="nav-tab">
+                <i class="fas fa-home"></i> Inicio
+            </a>
+            <a href="dashboard.html" class="nav-tab">
+                <i class="fas fa-chart-pie"></i> Dashboard
+            </a>
+            <a href="transacciones.html" class="nav-tab">
+                <i class="fas fa-exchange-alt"></i> Transacciones
+            </a>
+            <a href="calendario.html" class="nav-tab">
+                <i class="fas fa-calendar-alt"></i> Calendario
+            </a>
+            <a href="analisis.html" class="nav-tab">
+                <i class="fas fa-chart-line"></i> Análisis
+            </a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <!-- Period Selector -->
+            <div class="period-selector">
+                <div class="period-controls">
+                    <label for="period-type">Período:</label>
+                    <select id="period-type">
+                        <option value="month">Mes Actual</option>
+                        <option value="year">Año Actual</option>
+                        <option value="custom">Personalizado</option>
+                        <option value="all">Todos los Períodos</option>
+                    </select>
+                    
+                    <div id="custom-period" style="display: none; gap: 0.5rem;">
+                        <input type="date" id="start-date">
+                        <input type="date" id="end-date">
+                        <button class="btn btn-secondary" id="apply-period">Aplicar</button>
+                    </div>
+                    
+                    <span id="current-period-text" style="color: var(--text-light); font-weight: 500;"></span>
+                </div>
+            </div>
+
+            <!-- Formularios para agregar transacciones -->
+            <section class="transaction-forms">
+                <div class="form-container">
+                    <div class="form-card">
+                        <h3><i class="fas fa-plus-circle"></i> Agregar Ingreso</h3>
+                        <form id="income-form">
+                            <div class="form-group">
+                                <label for="income-description">Descripción:</label>
+                                <input type="text" id="income-description" placeholder="Ej: Salario, Freelance..." required>
+                            </div>
+                            <div class="form-group">
+                                <label for="income-amount">Monto:</label>
+                                <input type="number" id="income-amount" placeholder="0.00" step="0.01" min="0.01" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="income-date">Fecha:</label>
+                                <input type="date" id="income-date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="income-category">Categoría:</label>
+                                <select id="income-category">
+                                    <option value="salario">Salario</option>
+                                    <option value="freelance">Freelance</option>
+                                    <option value="inversiones">Inversiones</option>
+                                    <option value="venta">Venta</option>
+                                    <option value="regalo">Regalo</option>
+                                    <option value="otros">Otros</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-plus"></i> Agregar Ingreso
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="form-card">
+                        <h3><i class="fas fa-minus-circle"></i> Agregar Gasto</h3>
+                        <form id="expense-form">
+                            <div class="form-group">
+                                <label for="expense-description">Descripción:</label>
+                                <input type="text" id="expense-description" placeholder="Ej: Comida, Transporte..." required>
+                            </div>
+                            <div class="form-group">
+                                <label for="expense-amount">Monto:</label>
+                                <input type="number" id="expense-amount" placeholder="0.00" step="0.01" min="0.01" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="expense-date">Fecha:</label>
+                                <input type="date" id="expense-date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="expense-category">Categoría:</label>
+                                <select id="expense-category">
+                                    <option value="comida">Comida</option>
+                                    <option value="transporte">Transporte</option>
+                                    <option value="vivienda">Vivienda</option>
+                                    <option value="entretenimiento">Entretenimiento</option>
+                                    <option value="salud">Salud</option>
+                                    <option value="educacion">Educación</option>
+                                    <option value="ropa">Ropa</option>
+                                    <option value="servicios">Servicios</option>
+                                    <option value="otros">Otros</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fas fa-plus"></i> Agregar Gasto
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Filtros y búsqueda -->
+            <section class="filters-section">
+                <div class="filter-card">
+                    <h3><i class="fas fa-filter"></i> Filtros y Búsqueda</h3>
+                    <div class="filter-controls">
+                        <div class="form-group">
+                            <label for="search-description">Buscar por descripción:</label>
+                            <input type="text" id="search-description" placeholder="Buscar transacciones...">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="filter-type">Tipo:</label>
+                            <select id="filter-type">
+                                <option value="all">Todos</option>
+                                <option value="ingreso">Solo Ingresos</option>
+                                <option value="gasto">Solo Gastos</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="filter-category">Categoría:</label>
+                            <select id="filter-category">
+                                <option value="all">Todas</option>
+                                <!-- Se llenarán dinámicamente -->
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="sort-by">Ordenar por:</label>
+                            <select id="sort-by">
+                                <option value="date-desc">Fecha (Más reciente)</option>
+                                <option value="date-asc">Fecha (Más antigua)</option>
+                                <option value="amount-desc">Monto (Mayor a menor)</option>
+                                <option value="amount-asc">Monto (Menor a mayor)</option>
+                                <option value="description">Descripción (A-Z)</option>
+                            </select>
+                        </div>
+                        
+                        <button class="btn btn-secondary" id="clear-filters">
+                            <i class="fas fa-times"></i> Limpiar Filtros
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Lista de transacciones -->
+            <section class="transactions">
+                <div class="transactions-header">
+                    <h3><i class="fas fa-list"></i> Historial de Transacciones <span id="transaction-count-badge" class="count-badge">0</span></h3>
+                    <div class="export-import-buttons">
+                        <button class="btn btn-secondary" id="export-btn">
+                            <i class="fas fa-download"></i> Exportar
+                        </button>
+                        <button class="btn btn-secondary" id="import-btn">
+                            <i class="fas fa-upload"></i> Importar
+                        </button>
+                        <button class="btn btn-secondary" id="clear-all-btn">
+                            <i class="fas fa-trash"></i> Limpiar Todo
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="transactions-container">
+                    <!-- Todas las transacciones en una sola lista -->
+                    <div class="all-transactions-section">
+                        <div id="all-transactions-list" class="transaction-list">
+                            <!-- Las transacciones se cargarán aquí -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Paginación -->
+                <div class="pagination-container">
+                    <div class="pagination-info">
+                        <span id="pagination-info">Mostrando 0 - 0 de 0 transacciones</span>
+                    </div>
+                    <div class="pagination-controls">
+                        <button class="btn btn-secondary" id="prev-page" disabled>
+                            <i class="fas fa-chevron-left"></i> Anterior
+                        </button>
+                        <span id="page-info">Página 1 de 1</span>
+                        <button class="btn btn-secondary" id="next-page" disabled>
+                            Siguiente <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Gestor de Presupuesto Personal. Todos los derechos reservados a Valentín Otero.</p>
+        </div>
+    </footer>
+
+    <!-- Hidden file input for import -->
+    <input type="file" id="import-file" accept=".json" style="display: none;">
+
+    <!-- JavaScript -->
+    <script src="../js/script.js"></script>
+    <script>
+        // Inicializar solo funciones de transacciones
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.gestorPresupuesto) {
+                gestorPresupuesto.inicializarTransacciones();
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calendario - Gestor de Presupuesto Personal</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💰</text></svg>">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/style.css" />
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <h1><i class="fas fa-wallet"></i> Gestor de Presupuesto</h1>
+            <p class="subtitle">Calendario - Vista temporal de tus transacciones</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav-tabs">
+        <div class="container">
+            <a href="../index.html" class="nav-tab">
+                <i class="fas fa-home"></i> Inicio
+            </a>
+            <a href="dashboard.html" class="nav-tab">
+                <i class="fas fa-chart-pie"></i> Dashboard
+            </a>
+            <a href="transacciones.html" class="nav-tab">
+                <i class="fas fa-exchange-alt"></i> Transacciones
+            </a>
+            <a href="calendario.html" class="nav-tab">
+                <i class="fas fa-calendar-alt"></i> Calendario
+            </a>
+            <a href="analisis.html" class="nav-tab">
+                <i class="fas fa-chart-line"></i> Análisis
+            </a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <!-- Resumen del mes actual -->
+            <section class="month-summary">
+                <div class="summary-card income">
+                    <div class="card-icon">
+                        <i class="fas fa-arrow-up"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Ingresos del Mes</h3>
+                        <p class="amount" id="month-income">$0.00</p>
+                    </div>
+                </div>
+                
+                <div class="summary-card expense">
+                    <div class="card-icon">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Gastos del Mes</h3>
+                        <p class="amount" id="month-expense">$0.00</p>
+                    </div>
+                </div>
+                
+                <div class="summary-card balance">
+                    <div class="card-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Balance del Mes</h3>
+                        <p class="amount" id="month-balance">$0.00</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Vista de calendario -->
+            <section class="calendar-section">
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <h3 id="calendar-title">Enero 2025</h3>
+                        <div class="calendar-nav">
+                            <button class="btn btn-secondary" id="prev-month">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button class="btn btn-secondary" id="today-btn">
+                                <i class="fas fa-calendar-day"></i> Hoy
+                            </button>
+                            <button class="btn btn-secondary" id="next-month">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="calendar-grid" id="calendar-grid">
+                        <!-- El calendario se genera dinámicamente -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Leyenda del calendario -->
+            <section class="calendar-legend">
+                <div class="legend-container">
+                    <h4><i class="fas fa-info-circle"></i> Leyenda</h4>
+                    <div class="legend-items">
+                        <div class="legend-item">
+                            <div class="legend-color positive"></div>
+                            <span>Días con balance positivo (más ingresos que gastos)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color negative"></div>
+                            <span>Días con balance negativo (más gastos que ingresos)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color neutral"></div>
+                            <span>Días sin transacciones</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-indicator"></div>
+                            <span>Borde azul indica días con transacciones</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Vista rápida del día seleccionado -->
+            <section class="day-detail">
+                <div class="detail-container" id="day-detail-container" style="display: none;">
+                    <div class="detail-header">
+                        <h4 id="selected-day-title">Detalles del día</h4>
+                        <button class="btn btn-secondary" id="close-detail">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="detail-content">
+                        <div class="day-summary">
+                            <div class="day-stat">
+                                <span class="stat-label">Ingresos:</span>
+                                <span class="stat-value income" id="day-income">$0.00</span>
+                            </div>
+                            <div class="day-stat">
+                                <span class="stat-label">Gastos:</span>
+                                <span class="stat-value expense" id="day-expense">$0.00</span>
+                            </div>
+                            <div class="day-stat">
+                                <span class="stat-label">Balance:</span>
+                                <span class="stat-value" id="day-balance">$0.00</span>
+                            </div>
+                        </div>
+                        <div class="day-transactions">
+                            <h5>Transacciones del día</h5>
+                            <div id="day-transactions-list" class="mini-transaction-list">
+                                <!-- Se cargarán las transacciones del día -->
+                            </div>
+                        </div>
+                        <div class="detail-actions">
+                            <button class="btn btn-primary" id="add-transaction-btn">
+                                <i class="fas fa-plus"></i> Agregar Transacción
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Estadísticas mensuales -->
+            <section class="monthly-stats">
+                <div class="stats-container">
+                    <h4><i class="fas fa-chart-bar"></i> Estadísticas del Mes</h4>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="days-with-transactions">0</div>
+                            <div class="stat-label">Días con Actividad</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="avg-daily-expense">$0</div>
+                            <div class="stat-label">Gasto Diario Promedio</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="best-day-balance">$0</div>
+                            <div class="stat-label">Mejor Día (Balance)</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="total-transactions">0</div>
+                            <div class="stat-label">Total Transacciones</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Acceso rápido -->
+            <section class="quick-actions">
+                <div class="actions-container">
+                    <h4><i class="fas fa-bolt"></i> Acciones Rápidas</h4>
+                    <div class="action-buttons">
+                        <a href="transacciones.html" class="btn btn-success">
+                            <i class="fas fa-plus"></i> Agregar Transacción
+                        </a>
+                        <button class="btn btn-secondary" id="export-month-btn">
+                            <i class="fas fa-download"></i> Exportar Mes
+                        </button>
+                        <a href="analisis.html" class="btn btn-primary">
+                            <i class="fas fa-chart-line"></i> Ver Análisis
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Gestor de Presupuesto Personal. Todos los derechos reservados a Valentín Otero.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../js/script.js"></script>
+    <script>
+        // Inicializar solo funciones del calendario
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.gestorPresupuesto) {
+                gestorPresupuesto.inicializarCalendario();
+            }
+        });
+    </script>
+</body>
+
+</html>

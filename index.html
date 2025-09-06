@@ -8,12 +8,14 @@
     <title>Gestor de Presupuesto Personal</title>
 
     <!-- Favicon para evitar error 404 -->
-    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💰</text></svg>">
-    
+    <link rel="icon" type="image/x-icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💰</text></svg>">
+
     <!-- Preconnect para mejorar rendimiento -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@300;400;500;700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@300;400;500;700&display=swap"
         rel="stylesheet" />
 
     <!-- Font Awesome para iconos -->
@@ -27,118 +29,223 @@
     <header class="header">
         <div class="container">
             <h1><i class="fas fa-wallet"></i> Gestor de Presupuesto</h1>
-            <p class="subtitle">Controla tus finanzas de manera inteligente</p>
+            <p class="subtitle">Controla tus finanzas con calendario y análisis temporal</p>
         </div>
     </header>
 
+    <nav class="nav-tabs">
+        <div class="container">
+            <a href="index.html" class="nav-tab active">
+                <i class="fas fa-home"></i> Inicio
+            </a>
+            <a href="./pages/dashboard.html" class="nav-tab">
+                <i class="fas fa-chart-pie"></i> Dashboard
+            </a>
+            <a href="./pages/transacciones.html" class="nav-tab">
+                <i class="fas fa-exchange-alt"></i> Transacciones
+            </a>
+            <a href="./pages/calendario.html" class="nav-tab">
+                <i class="fas fa-calendar-alt"></i> Calendario
+            </a>
+            <a href="./pages/analisis.html" class="nav-tab">
+                <i class="fas fa-chart-line"></i> Análisis
+            </a>
+        </div>
+    </nav>
+
     <main class="main-content">
         <div class="container">
-            <!-- Resumen del presupuesto -->
-            <section class="budget-summary">
-                <div class="summary-card income">
-                    <div class="card-icon">
-                        <i class="fas fa-arrow-up"></i>
-                    </div>
-                    <div class="card-content">
-                        <h3>Ingresos</h3>
-                        <p class="amount" id="total-income">$0.00</p>
-                    </div>
-                </div>
-                
-                <div class="summary-card expense">
-                    <div class="card-icon">
-                        <i class="fas fa-arrow-down"></i>
-                    </div>
-                    <div class="card-content">
-                        <h3>Gastos</h3>
-                        <p class="amount" id="total-expense">$0.00</p>
-                    </div>
-                </div>
-                
-                <div class="summary-card balance">
-                    <div class="card-icon">
-                        <i class="fas fa-balance-scale"></i>
-                    </div>
-                    <div class="card-content">
-                        <h3>Saldo</h3>
-                        <p class="amount" id="total-balance">$0.00</p>
+            <!-- Página de inicio / Bienvenida -->
+            <section class="welcome-section">
+                <div class="welcome-card">
+                    <div class="welcome-header">
+                        <h2><i class="fas fa-rocket"></i> ¡Bienvenido a tu Gestor de Presupuesto!</h2>
+                        <p>Tu herramienta completa para controlar y analizar tus finanzas personales con funcionalidades
+                            avanzadas de calendario y análisis temporal.</p>
                     </div>
                 </div>
             </section>
 
-            <!-- Formularios para agregar transacciones -->
-            <section class="transaction-forms">
-                <div class="form-container">
-                    <div class="form-card">
-                        <h3><i class="fas fa-plus-circle"></i> Agregar Ingreso</h3>
-                        <form id="income-form">
-                            <div class="form-group">
-                                <label for="income-description">Descripción:</label>
-                                <input type="text" id="income-description" placeholder="Ej: Salario, Freelance..." required>
-                            </div>
-                            <div class="form-group">
-                                <label for="income-amount">Monto:</label>
-                                <input type="number" id="income-amount" placeholder="0.00" step="0.01" min="0.01" required>
-                            </div>
-                            <button type="submit" class="btn btn-success">
-                                <i class="fas fa-plus"></i> Agregar Ingreso
-                            </button>
-                        </form>
+            <!-- Resumen rápido -->
+            <section class="quick-summary">
+                <h3><i class="fas fa-tachometer-alt"></i> Resumen Rápido</h3>
+                <div class="budget-summary">
+                    <div class="summary-card income">
+                        <div class="card-icon">
+                            <i class="fas fa-arrow-up"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Total Ingresos</h3>
+                            <p class="amount" id="total-income">$0.00</p>
+                        </div>
                     </div>
 
-                    <div class="form-card">
-                        <h3><i class="fas fa-minus-circle"></i> Agregar Gasto</h3>
-                        <form id="expense-form">
-                            <div class="form-group">
-                                <label for="expense-description">Descripción:</label>
-                                <input type="text" id="expense-description" placeholder="Ej: Comida, Transporte..." required>
-                            </div>
-                            <div class="form-group">
-                                <label for="expense-amount">Monto:</label>
-                                <input type="number" id="expense-amount" placeholder="0.00" step="0.01" min="0.01" required>
-                            </div>
-                            <button type="submit" class="btn btn-danger">
-                                <i class="fas fa-plus"></i> Agregar Gasto
-                            </button>
-                        </form>
+                    <div class="summary-card expense">
+                        <div class="card-icon">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Total Gastos</h3>
+                            <p class="amount" id="total-expense">$0.00</p>
+                        </div>
+                    </div>
+
+                    <div class="summary-card balance">
+                        <div class="card-icon">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Saldo Total</h3>
+                            <p class="amount" id="total-balance">$0.00</p>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Lista de transacciones -->
-            <section class="transactions">
-                <div class="transactions-header">
-                    <h3><i class="fas fa-list"></i> Historial de Transacciones</h3>
-                    <button class="btn btn-secondary" id="clear-all-btn">
-                        <i class="fas fa-trash"></i> Limpiar Todo
-                    </button>
+            <!-- Navegación principal -->
+            <section class="main-navigation">
+                <h3><i class="fas fa-compass"></i> Accede a todas las funcionalidades</h3>
+                <div class="navigation-grid">
+                    <a href="./pages/dashboard.html" class="nav-card dashboard">
+                        <div class="nav-icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <h4>Dashboard</h4>
+                        <p>Vista general de tu situación financiera con gráficos principales y resúmenes ejecutivos.</p>
+                        <div class="nav-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+
+                    <a href="./pages/transacciones.html" class="nav-card transactions">
+                        <div class="nav-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <h4>Transacciones</h4>
+                        <p>Registra y administra todos tus ingresos y gastos con categorías y fechas detalladas.</p>
+                        <div class="nav-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+
+                    <a href="./pages/calendario.html" class="nav-card calendar">
+                        <div class="nav-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h4>Calendario</h4>
+                        <p>Visualiza tus transacciones en una vista mensual intuitiva con análisis por períodos.</p>
+                        <div class="nav-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+
+                    <a href="./pages/analisis.html" class="nav-card analytics">
+                        <div class="nav-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h4>Análisis</h4>
+                        <p>Gráficos avanzados, tendencias, patrones de gasto e insights inteligentes de tus finanzas.
+                        </p>
+                        <div class="nav-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
                 </div>
-                
-                <div class="transactions-container">
-                    <div class="transactions-section">
-                        <h4><i class="fas fa-arrow-up text-success"></i> Ingresos</h4>
-                        <div id="income-list" class="transaction-list"></div>
+            </section>
+
+            <!-- Características principales -->
+            <section class="features-section">
+                <h3><i class="fas fa-star"></i> Características Principales</h3>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <h4>Sistema de Fechas</h4>
+                        <p>Registra transacciones con fechas específicas y visualiza tu actividad financiera en el
+                            calendario mensual.</p>
                     </div>
-                    
-                    <div class="transactions-section">
-                        <h4><i class="fas fa-arrow-down text-danger"></i> Gastos</h4>
-                        <div id="expense-list" class="transaction-list"></div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-tags"></i>
+                        </div>
+                        <h4>Categorización</h4>
+                        <p>Organiza ingresos y gastos por categorías personalizables para un mejor análisis de patrones.
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-area"></i>
+                        </div>
+                        <h4>Gráficos Interactivos</h4>
+                        <p>Visualiza tus datos con gráficos dinámicos: barras, líneas, dona y radar para análisis
+                            profundo.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-filter"></i>
+                        </div>
+                        <h4>Filtros Temporales</h4>
+                        <p>Analiza períodos específicos: mes actual, año, rangos personalizados o todos los registros.
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-download"></i>
+                        </div>
+                        <h4>Exportar/Importar</h4>
+                        <p>Respalda tus datos exportando a JSON o importa información desde archivos externos.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h4>Diseño Responsive</h4>
+                        <p>Funciona perfectamente en computadoras, tablets y móviles con diseño adaptativo.</p>
                     </div>
                 </div>
             </section>
 
-            <!-- Gráfico de presupuesto -->
-            <section class="budget-chart">
-                <div class="chart-header">
-                    <h3><i class="fas fa-chart-pie"></i> Distribución del Presupuesto</h3>
-                    <button class="btn btn-secondary" id="test-chart-btn" title="Probar gráfico">
-                        <i class="fas fa-sync-alt"></i> Probar Gráfico
-                    </button>
-                </div>
-                <div class="chart-container">
-                    <canvas id="budget-chart"></canvas>
-                    <div id="chart-status" class="chart-status">
-                        <p>Estado del gráfico: <span id="chart-status-text">Inicializando...</span></p>
+            <!-- Acceso rápido -->
+            <section class="quick-start">
+                <h3><i class="fas fa-play-circle"></i> Comenzar Ahora</h3>
+                <div class="quick-start-content">
+                    <div class="start-steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Registra Transacciones</h4>
+                                <p>Comienza agregando tus ingresos y gastos en la sección de transacciones.</p>
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Explora el Dashboard</h4>
+                                <p>Revisa tu resumen financiero y los gráficos principales.</p>
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Analiza Patrones</h4>
+                                <p>Usa el calendario y análisis para identificar tendencias en tus finanzas.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="start-action">
+                        <a href="./pages/transacciones.html" class="btn btn-primary btn-large">
+                            <i class="fas fa-plus-circle"></i>
+                            Agregar Primera Transacción
+                        </a>
                     </div>
                 </div>
             </section>
@@ -151,11 +258,20 @@
         </div>
     </footer>
 
-    <!-- Chart.js para gráficos -->
+    <!-- Chart.js para el resumen rápido -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <!-- Enlazamos el JavaScript -->
+
+    <!-- JavaScript básico para el resumen -->
     <script src="js/script.js"></script>
+    <script>
+        // Función simple para mostrar resumen en la página de inicio
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.gestorPresupuesto) {
+                // Cargar datos y mostrar resumen básico
+                gestorPresupuesto.mostrarResumenInicio();
+            }
+        });
+    </script>
 </body>
 
 </html>
