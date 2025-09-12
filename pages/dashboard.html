@@ -8,12 +8,15 @@
     <title>Dashboard - Gestor de Presupuesto Personal</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💰</text></svg>">
-    
+    <link rel="icon" type="image/x-icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💰</text></svg>">
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@300;400;500;700&display=swap"
+        rel="stylesheet" />
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -28,28 +31,24 @@
             <h1><i class="fas fa-wallet"></i> Gestor de Presupuesto</h1>
             <p class="subtitle">Dashboard - Vista general de tus finanzas</p>
         </div>
-    </header>
 
-    <!-- Navigation -->
-    <nav class="nav-tabs">
-        <div class="container">
-            <a href="../index.html" class="nav-tab">
-                <i class="fas fa-home"></i> Inicio
-            </a>
-            <a href="dashboard.html" class="nav-tab">
-                <i class="fas fa-chart-pie"></i> Dashboard
-            </a>
-            <a href="transacciones.html" class="nav-tab">
-                <i class="fas fa-exchange-alt"></i> Transacciones
-            </a>
-            <a href="calendario.html" class="nav-tab">
-                <i class="fas fa-calendar-alt"></i> Calendario
-            </a>
-            <a href="analisis.html" class="nav-tab">
-                <i class="fas fa-chart-line"></i> Análisis
-            </a>
-        </div>
-    </nav>
+        <nav class="nav-tabs">
+            <div class="container">
+                <input type="checkbox" id="nav-checkbox" class="nav-checkbox" />
+                <label for="nav-checkbox" class="nav-toggle" aria-label="Abrir menú">
+                    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+                </label>
+                <div class="nav-menu">
+                    <a href="../index.html" class="nav-tab"><i class="fas fa-home"></i> Inicio</a>
+                    <a href="dashboard.html" class="nav-tab active"><i class="fas fa-chart-pie"></i> Dashboard</a>
+                    <a href="transacciones.html" class="nav-tab"><i class="fas fa-exchange-alt"></i> Transacciones</a>
+                    <a href="calendario.html" class="nav-tab"><i class="fas fa-calendar-alt"></i> Calendario</a>
+                    <a href="analisis.html" class="nav-tab"><i class="fas fa-chart-line"></i> Análisis</a>
+                </div>
+                <div class="nav-overlay"></div>
+            </div>
+        </nav>
+    </header>
 
     <main class="main-content">
         <div class="container">
@@ -63,13 +62,13 @@
                         <option value="custom">Personalizado</option>
                         <option value="all">Todos los Períodos</option>
                     </select>
-                    
+
                     <div id="custom-period" style="display: none; gap: 0.5rem;">
                         <input type="date" id="start-date">
                         <input type="date" id="end-date">
                         <button class="btn btn-secondary" id="apply-period">Aplicar</button>
                     </div>
-                    
+
                     <span id="current-period-text" style="color: var(--text-light); font-weight: 500;"></span>
                 </div>
             </div>
@@ -85,7 +84,7 @@
                         <p class="amount" id="total-income">$0.00</p>
                     </div>
                 </div>
-                
+
                 <div class="summary-card expense">
                     <div class="card-icon">
                         <i class="fas fa-arrow-down"></i>
@@ -95,7 +94,7 @@
                         <p class="amount" id="total-expense">$0.00</p>
                     </div>
                 </div>
-                
+
                 <div class="summary-card balance">
                     <div class="card-icon">
                         <i class="fas fa-balance-scale"></i>
@@ -118,7 +117,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="chart-card">
                     <h3><i class="fas fa-chart-line"></i> Tendencia Mensual</h3>
                     <div class="chart-container">
@@ -148,7 +147,7 @@
 
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+
     <!-- JavaScript -->
     <script src="../js/script.js"></script>
     <script>

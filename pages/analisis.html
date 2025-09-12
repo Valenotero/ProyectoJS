@@ -31,28 +31,25 @@
             <h1><i class="fas fa-wallet"></i> Gestor de Presupuesto</h1>
             <p class="subtitle">Análisis - Insights profundos de tus finanzas</p>
         </div>
-    </header>
 
-    <!-- Navigation -->
-    <nav class="nav-tabs">
-        <div class="container">
-            <a href="../index.html" class="nav-tab">
-                <i class="fas fa-home"></i> Inicio
-            </a>
-            <a href="dashboard.html" class="nav-tab">
-                <i class="fas fa-chart-pie"></i> Dashboard
-            </a>
-            <a href="transacciones.html" class="nav-tab">
-                <i class="fas fa-exchange-alt"></i> Transacciones
-            </a>
-            <a href="calendario.html" class="nav-tab">
-                <i class="fas fa-calendar-alt"></i> Calendario
-            </a>
-            <a href="analisis.html" class="nav-tab">
-                <i class="fas fa-chart-line"></i> Análisis
-            </a>
-        </div>
-    </nav>
+        <nav class="nav-tabs">
+            <div class="container">
+                <input type="checkbox" id="nav-checkbox" class="nav-checkbox" />
+                <label for="nav-checkbox" class="nav-toggle" aria-label="Abrir menú">
+                    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+                </label>
+                <div class="nav-menu">
+                    <a href="../index.html" class="nav-tab"><i class="fas fa-home"></i> Inicio</a>
+                    <a href="dashboard.html" class="nav-tab"><i class="fas fa-chart-pie"></i> Dashboard</a>
+                    <a href="transacciones.html" class="nav-tab"><i class="fas fa-exchange-alt"></i> Transacciones</a>
+                    <a href="calendario.html" class="nav-tab"><i class="fas fa-calendar-alt"></i> Calendario</a>
+                    <a href="analisis.html" class="nav-tab active"><i class="fas fa-chart-line"></i> Análisis</a>
+                </div>
+                <div class="nav-overlay"></div>
+            </div>
+        </nav>
+
+    </header>
 
     <main class="main-content">
         <div class="container">

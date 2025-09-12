@@ -646,7 +646,7 @@ class GestorPresupuesto {
                 id: this.generarId(),
                 descripcion: descripcion,
                 monto: monto,
-                fecha: new Date(fecha + 'T12:00:00'), 
+                fecha: new Date(fecha + 'T12:00:00'),
                 categoria: categoria || 'otros',
                 tipo: 'ingreso',
             };
@@ -978,7 +978,7 @@ class GestorPresupuesto {
                 'month-expense',
                 `$${totalGastos.toFixed(2)}`
             );
-            
+
             this.actualizarElementoTexto('month-expense', `$${totalGastos.toFixed(2)}`);
 
 

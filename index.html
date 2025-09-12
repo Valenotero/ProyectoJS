@@ -23,6 +23,7 @@
 
     <!-- Enlazamos el CSS -->
     <link rel="stylesheet" href="css/style.css" />
+
 </head>
 
 <body>
@@ -31,27 +32,26 @@
             <h1><i class="fas fa-wallet"></i> Gestor de Presupuesto</h1>
             <p class="subtitle">Controla tus finanzas con calendario y análisis temporal</p>
         </div>
-    </header>
 
-    <nav class="nav-tabs">
-        <div class="container">
-            <a href="index.html" class="nav-tab active">
-                <i class="fas fa-home"></i> Inicio
-            </a>
-            <a href="./pages/dashboard.html" class="nav-tab">
-                <i class="fas fa-chart-pie"></i> Dashboard
-            </a>
-            <a href="./pages/transacciones.html" class="nav-tab">
-                <i class="fas fa-exchange-alt"></i> Transacciones
-            </a>
-            <a href="./pages/calendario.html" class="nav-tab">
-                <i class="fas fa-calendar-alt"></i> Calendario
-            </a>
-            <a href="./pages/analisis.html" class="nav-tab">
-                <i class="fas fa-chart-line"></i> Análisis
-            </a>
-        </div>
-    </nav>
+        <nav class="nav-tabs">
+            <div class="container">
+                <input type="checkbox" id="nav-checkbox" class="nav-checkbox" />
+                <label for="nav-checkbox" class="nav-toggle" aria-label="Abrir menú">
+                    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+                </label>
+                <div class="nav-menu">
+                    <a href="index.html" class="nav-tab active"><i class="fas fa-home"></i> Inicio</a>
+                    <a href="./pages/dashboard.html" class="nav-tab"><i class="fas fa-chart-pie"></i> Dashboard</a>
+                    <a href="./pages/transacciones.html" class="nav-tab"><i class="fas fa-exchange-alt"></i>
+                        Transacciones</a>
+                    <a href="./pages/calendario.html" class="nav-tab"><i class="fas fa-calendar-alt"></i> Calendario</a>
+                    <a href="./pages/analisis.html" class="nav-tab"><i class="fas fa-chart-line"></i> Análisis</a>
+                </div>
+                <div class="nav-overlay"></div>
+            </div>
+        </nav>
+
+    </header>
 
     <main class="main-content">
         <div class="container">
@@ -257,9 +257,6 @@
             <p>&copy; 2025 Gestor de Presupuesto Personal. Todos los derechos reservados a Valentín Otero.</p>
         </div>
     </footer>
-
-    <!-- Chart.js para el resumen rápido -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- JavaScript básico para el resumen -->
     <script src="js/script.js"></script>

@@ -8,12 +8,15 @@
     <title>Transacciones - Gestor de Presupuesto Personal</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💰</text></svg>">
-    
+    <link rel="icon" type="image/x-icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💰</text></svg>">
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@300;400;500;700&display=swap"
+        rel="stylesheet" />
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -28,28 +31,27 @@
             <h1><i class="fas fa-wallet"></i> Gestor de Presupuesto</h1>
             <p class="subtitle">Transacciones - Administra tus ingresos y gastos</p>
         </div>
+
+        <nav class="nav-tabs">
+            <div class="container">
+                <input type="checkbox" id="nav-checkbox" class="nav-checkbox" />
+                <label for="nav-checkbox" class="nav-toggle" aria-label="Abrir menú">
+                    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+                </label>
+                <div class="nav-menu">
+                    <a href="../index.html" class="nav-tab"><i class="fas fa-home"></i> Inicio</a>
+                    <a href="dashboard.html" class="nav-tab"><i class="fas fa-chart-pie"></i> Dashboard</a>
+                    <a href="transacciones.html" class="nav-tab active"><i class="fas fa-exchange-alt"></i>
+                        Transacciones</a>
+                    <a href="calendario.html" class="nav-tab"><i class="fas fa-calendar-alt"></i> Calendario</a>
+                    <a href="analisis.html" class="nav-tab"><i class="fas fa-chart-line"></i> Análisis</a>
+                </div>
+                <div class="nav-overlay"></div>
+            </div>
+        </nav>
+
     </header>
 
-    <!-- Navigation -->
-    <nav class="nav-tabs">
-        <div class="container">
-            <a href="../index.html" class="nav-tab">
-                <i class="fas fa-home"></i> Inicio
-            </a>
-            <a href="dashboard.html" class="nav-tab">
-                <i class="fas fa-chart-pie"></i> Dashboard
-            </a>
-            <a href="transacciones.html" class="nav-tab">
-                <i class="fas fa-exchange-alt"></i> Transacciones
-            </a>
-            <a href="calendario.html" class="nav-tab">
-                <i class="fas fa-calendar-alt"></i> Calendario
-            </a>
-            <a href="analisis.html" class="nav-tab">
-                <i class="fas fa-chart-line"></i> Análisis
-            </a>
-        </div>
-    </nav>
 
     <main class="main-content">
         <div class="container">
@@ -63,13 +65,13 @@
                         <option value="custom">Personalizado</option>
                         <option value="all">Todos los Períodos</option>
                     </select>
-                    
+
                     <div id="custom-period" style="display: none; gap: 0.5rem;">
                         <input type="date" id="start-date">
                         <input type="date" id="end-date">
                         <button class="btn btn-secondary" id="apply-period">Aplicar</button>
                     </div>
-                    
+
                     <span id="current-period-text" style="color: var(--text-light); font-weight: 500;"></span>
                 </div>
             </div>
@@ -82,11 +84,13 @@
                         <form id="income-form">
                             <div class="form-group">
                                 <label for="income-description">Descripción:</label>
-                                <input type="text" id="income-description" placeholder="Ej: Salario, Freelance..." required>
+                                <input type="text" id="income-description" placeholder="Ej: Salario, Freelance..."
+                                    required>
                             </div>
                             <div class="form-group">
                                 <label for="income-amount">Monto:</label>
-                                <input type="number" id="income-amount" placeholder="0.00" step="0.01" min="0.01" required>
+                                <input type="number" id="income-amount" placeholder="0.00" step="0.01" min="0.01"
+                                    required>
                             </div>
                             <div class="form-group">
                                 <label for="income-date">Fecha:</label>
@@ -114,11 +118,13 @@
                         <form id="expense-form">
                             <div class="form-group">
                                 <label for="expense-description">Descripción:</label>
-                                <input type="text" id="expense-description" placeholder="Ej: Comida, Transporte..." required>
+                                <input type="text" id="expense-description" placeholder="Ej: Comida, Transporte..."
+                                    required>
                             </div>
                             <div class="form-group">
                                 <label for="expense-amount">Monto:</label>
-                                <input type="number" id="expense-amount" placeholder="0.00" step="0.01" min="0.01" required>
+                                <input type="number" id="expense-amount" placeholder="0.00" step="0.01" min="0.01"
+                                    required>
                             </div>
                             <div class="form-group">
                                 <label for="expense-date">Fecha:</label>
@@ -155,7 +161,7 @@
                             <label for="search-description">Buscar por descripción:</label>
                             <input type="text" id="search-description" placeholder="Buscar transacciones...">
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="filter-type">Tipo:</label>
                             <select id="filter-type">
@@ -164,7 +170,7 @@
                                 <option value="gasto">Solo Gastos</option>
                             </select>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="filter-category">Categoría:</label>
                             <select id="filter-category">
@@ -172,7 +178,7 @@
                                 <!-- Se llenarán dinámicamente -->
                             </select>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="sort-by">Ordenar por:</label>
                             <select id="sort-by">
@@ -183,7 +189,7 @@
                                 <option value="description">Descripción (A-Z)</option>
                             </select>
                         </div>
-                        
+
                         <button class="btn btn-secondary" id="clear-filters">
                             <i class="fas fa-times"></i> Limpiar Filtros
                         </button>
@@ -194,7 +200,8 @@
             <!-- Lista de transacciones -->
             <section class="transactions">
                 <div class="transactions-header">
-                    <h3><i class="fas fa-list"></i> Historial de Transacciones <span id="transaction-count-badge" class="count-badge">0</span></h3>
+                    <h3><i class="fas fa-list"></i> Historial de Transacciones <span id="transaction-count-badge"
+                            class="count-badge">0</span></h3>
                     <div class="export-import-buttons">
                         <button class="btn btn-secondary" id="export-btn">
                             <i class="fas fa-download"></i> Exportar
@@ -207,7 +214,7 @@
                         </button>
                     </div>
                 </div>
-                
+
                 <div class="transactions-container">
                     <!-- Todas las transacciones en una sola lista -->
                     <div class="all-transactions-section">
@@ -216,7 +223,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Paginación -->
                 <div class="pagination-container">
                     <div class="pagination-info">
